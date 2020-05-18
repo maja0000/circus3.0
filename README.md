@@ -1,4 +1,6 @@
-CIRCUS 2.0
+### CIRCUS 2.0
 
-to run 
-npm run dev
+#### 5 month after re-creation of my original 'circus' project. Using MERN stack
+
+to run
+`npm run dev`
