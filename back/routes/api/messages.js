@@ -9,10 +9,16 @@ router.get('/', (req, res) => {
     .then((message) => res.json(message));
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const data = req.body;
-  const newMessage = new Message(data);
-  newMessage.save().then((message) => res.json(message));
+  // const newMessage = new Message(data);
+  await Message.create(data);
+  await Message.find()
+    .sort({ creation: -1 })
+    .then((message) => {
+      console.log(message);
+      res.json(message);
+    });
 });
 
 router.get('/:id', (req, res, next) => {

@@ -14,13 +14,14 @@ const override = css`
 export default function Contact() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
 
   const [data, setData] = useState({
     message: '',
     author: '',
   });
   useEffect(() => {
-    fetch('/contact')
+    fetch('/api/contact')
       .then((res) => res.json())
       .then((res) => {
         setMessages(res);
@@ -37,27 +38,28 @@ export default function Contact() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    setMessages([{ ...data, fake: true }, ...messages]);
     if (!data.author) {
       toast.error('yikes! you forgot your name... 🙈❕');
     }
     if (!data.message) {
       toast.error('yikes! you forgot your message... 🙈❕');
     }
-    const currentMessages = [...messages];
 
-    fetch('/contact', {
+    fetch('/api/contact', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify(data),
     })
+      .then((res) => res.json())
       .then((res) => {
-        currentMessages.push(data);
-        setMessages(currentMessages);
-        console.log('here', data);
-        console.log('all', currentMessages);
+        setMessages(res);
+
         toast.success('🎉 thank you for your review 🎉');
+        setSuccess(true);
       })
       .catch((err) => {
         toast.error('upss! something went wrong! 🔎');
@@ -65,7 +67,7 @@ export default function Contact() {
   };
   return (
     <div className="contact-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <div className="form-picture"></div>
         <p>We would be happy to hear from you!</p>
         <label>your message</label>
@@ -94,14 +96,17 @@ export default function Contact() {
             {messages.map((text, key) => (
               <div
                 key={key}
-                style={{
-                  border: '2px solid grey',
-                  margin: '5px',
-                  borderRadius: '20px',
-                }}
+                style={
+                  ({
+                    border: '2px solid grey',
+                    margin: '5px',
+                    borderRadius: '20px',
+                  },
+                  text.fake && { opacity: 0.3 })
+                }
               >
                 <p>{text.message}</p>
-                <p>from {text.author}</p>
+                <p> {text.author}</p>
               </div>
             ))}
           </div>

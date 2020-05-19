@@ -40,7 +40,7 @@ const ModalGalleryOpen = ({ onRequestClose, ...otherProps }) => (
 export default function AllShows() {
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [query, setQuery] = useState('');
   const handleFilterShows = (event) => {
     const currentShows = [...shows];
     // console.log('currentShows', currentShows);
@@ -54,8 +54,12 @@ export default function AllShows() {
     setShows(shows);
   };
 
+  // Show.find( { type: "D" } )
+  // {duration:100, animals=false}
+  // ?duration=100&animals=false
+
   useEffect(() => {
-    fetch('/shows')
+    fetch(`/api/shows?${query}`)
       .then((res) => res.json())
       .then((res) => {
         setShows(res);
@@ -64,7 +68,7 @@ export default function AllShows() {
       .catch((error) => {
         console.log('Error: ', error);
       });
-  }, []);
+  }, [query]);
 
   return (
     <>

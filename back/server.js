@@ -7,9 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const path = require('path');
-
-const shows = require('./routes/api/shows');
-const messages = require('./routes/api/messages');
+const routes = require('./routes/api/');
 
 const db = require('./config/keys').mongoURI;
 
@@ -21,8 +19,7 @@ mongoose
   .then(() => console.log('database is connected'))
   .catch((err) => console.log(err));
 
-app.use('/contact', messages);
-app.use('/shows', shows);
+app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
