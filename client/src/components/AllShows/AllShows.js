@@ -4,16 +4,34 @@ import OneShow from './OneShow.js';
 import HashLoader from 'react-spinners/HashLoader';
 import { css } from '@emotion/core';
 
+import ModalPrices from '../Modals/ModalPrices';
+import ModalGallery from '../Modals/ModalGallery';
+
+import Modal from 'react-modal';
+import { ModalProvider, ModalConsumer } from '../Modals/ModalContext';
+import ModalRoot from '../Modals/ModalRoot';
+
 const override = css`
   display: block;
   margin-left: 50%;
   margin-right: 50%;
   border-color: black;
 `;
+const ModalAnimalOpen = ({ onRequestClose, ...otherProps }) => (
+  <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
+    <ModalPrices />
+    <button onClick={onRequestClose}>close</button>
+  </Modal>
+);
+const ModalGalleryOpen = ({ onRequestClose, ...otherProps }) => (
+  <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
+    <ModalGallery />
+    <button onClick={onRequestClose}>close</button>
+  </Modal>
+);
 
 export default function AllShows() {
   const [shows, setShows] = useState([]);
-  // const [selectedShows, setSelectedShows] = useState(shows);
   const [loading, setLoading] = useState(true);
 
   const handleFilterShows = (event) => {
@@ -94,11 +112,34 @@ export default function AllShows() {
               </div>
             </div>
           </div>
-          <div className="individual-shows-group">
-            {shows.map((show, key) => (
-              <OneShow key={key} show={show} />
-            ))}
-          </div>
+          <ModalProvider>
+            <ModalRoot />
+            <ModalConsumer>
+              {({ showModal }) => (
+                <React.Fragment>
+                  <div className="individual-shows-group">
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                      }}
+                    >
+                      <button onClick={() => showModal(ModalAnimalOpen)}>
+                        prices
+                      </button>
+                      <button onClick={() => showModal(ModalGalleryOpen)}>
+                        gallery
+                      </button>
+                    </div>
+                    {shows.map((show, key) => (
+                      <OneShow key={key} show={show} />
+                    ))}
+                  </div>
+                </React.Fragment>
+              )}
+            </ModalConsumer>
+          </ModalProvider>
         </div>
       )}
     </>

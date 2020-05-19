@@ -3,12 +3,13 @@ import './OneSHow.css';
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
+import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function OneShow({ show }) {
+export default function OneShow({ showModal, show, ModalAnimalOpen }) {
   const addLike = (id) => {
-    fetch(`http://localhost:5000/${id}`, {
+    fetch(`http://localhost:5000/shows/${id}`, {
       method: 'PUT',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -25,6 +26,7 @@ export default function OneShow({ show }) {
   };
   return (
     <div
+      // onClick={() => showModal(ModalAnimalOpen)}
       className="show-header"
       style={{ backgroundImage: `url("${show.picture}")` }}
     >
