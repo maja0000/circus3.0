@@ -14,12 +14,12 @@ export default class ModalGallery extends Component {
     };
     return (
       <div>
-        <h2> Gallery</h2>
         <Slider {...settings}>
           <div>
             <div
               style={{
                 height: '450px',
+
                 width: '90%',
                 backgroundImage:
                   "url('https://images.unsplash.com/photo-1572252698222-3ce9dcc32888?ixlib=rb-1.2.1&auto=format&fit=crop&w=2700&q=80')",

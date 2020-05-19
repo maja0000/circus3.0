@@ -20,13 +20,20 @@ const override = css`
 const ModalAnimalOpen = ({ onRequestClose, ...otherProps }) => (
   <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
     <ModalPrices />
-    <button onClick={onRequestClose}>close</button>
+    <br />
+
+    <button className="category-item" onClick={onRequestClose}>
+      close
+    </button>
   </Modal>
 );
 const ModalGalleryOpen = ({ onRequestClose, ...otherProps }) => (
   <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
     <ModalGallery />
-    <button onClick={onRequestClose}>close</button>
+    <br />
+    <button className="category-item" onClick={onRequestClose}>
+      close
+    </button>
   </Modal>
 );
 
@@ -125,10 +132,16 @@ export default function AllShows() {
                         justifyContent: 'space-around',
                       }}
                     >
-                      <button onClick={() => showModal(ModalAnimalOpen)}>
+                      <button
+                        className="category-item"
+                        onClick={() => showModal(ModalAnimalOpen)}
+                      >
                         prices
                       </button>
-                      <button onClick={() => showModal(ModalGalleryOpen)}>
+                      <button
+                        className="category-item"
+                        onClick={() => showModal(ModalGalleryOpen)}
+                      >
                         gallery
                       </button>
                     </div>
