@@ -20,7 +20,7 @@ export default function Contact() {
     author: '',
   });
   useEffect(() => {
-    fetch('http://localhost:5000/contact')
+    fetch('/contact')
       .then((res) => res.json())
       .then((res) => {
         setMessages(res);
