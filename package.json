@@ -4,11 +4,6 @@
   "description": "#### 5 month after re-creation of my original 'circus' project. Using MERN stack",
   "main": "index.js",
   "scripts": {
-    "start": "npm run dev",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "client-install": "npm install --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
