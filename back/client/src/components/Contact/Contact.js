@@ -39,12 +39,14 @@ export default function Contact() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    setMessages([{ ...data, fake: true }, ...messages]);
     if (!data.author) {
       toast.error('yikes! you forgot your name... 🙈❕');
     }
     if (!data.message) {
       toast.error('yikes! you forgot your message... 🙈❕');
+    }
+    if (data.message && data.author) {
+      setMessages([{ ...data, fake: true }, ...messages]);
     }
 
     fetch('/api/contact', {
@@ -100,7 +102,7 @@ export default function Contact() {
                 style={text.fake && { opacity: 0.3 }}
               >
                 <p>{text.message}</p>
-                <p> {text.author}</p>
+                <p>from {text.author}</p>
               </div>
             ))}
           </div>
