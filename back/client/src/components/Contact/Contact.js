@@ -96,14 +96,8 @@ export default function Contact() {
             {messages.map((text, key) => (
               <div
                 key={key}
-                style={
-                  ({
-                    border: '2px solid grey',
-                    margin: '5px',
-                    borderRadius: '20px',
-                  },
-                  text.fake && { opacity: 0.3 })
-                }
+                className="review"
+                style={text.fake && { opacity: 0.3 }}
               >
                 <p>{text.message}</p>
                 <p> {text.author}</p>

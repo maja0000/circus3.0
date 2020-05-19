@@ -11,12 +11,10 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
   const data = req.body;
-  // const newMessage = new Message(data);
   await Message.create(data);
   await Message.find()
     .sort({ creation: -1 })
     .then((message) => {
-      console.log(message);
       res.json(message);
     });
 });
