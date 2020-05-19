@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function OneShow({ showModal, show, ModalAnimalOpen }) {
   const [like, setLike] = React.useState(0);
   const addLike = (id) => {
-    fetch(`http://localhost:5000/shows/${id}`, {
+    fetch(`/shows/${id}`, {
       method: 'PUT',
       headers: new Headers({
         'Content-Type': 'application/json',

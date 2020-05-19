@@ -55,7 +55,7 @@ export default function AllShows() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:5000/shows')
+    fetch('/shows')
       .then((res) => res.json())
       .then((res) => {
         setShows(res);

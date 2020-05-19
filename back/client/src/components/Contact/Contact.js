@@ -45,7 +45,7 @@ export default function Contact() {
     }
     const currentMessages = [...messages];
 
-    fetch('http://localhost:5000/contact', {
+    fetch('/contact', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
