@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Contact.css';
+import HashLoader from 'react-spinners/HashLoader';
+import { css } from '@emotion/core';
 
+const override = css`
+  display: block;
+  margin-left: 50%;
+  margin-right: 50%;
+  border-color: black;
+`;
 export default function Contact() {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState({
     message: '',
     author: '',
   });
+  useEffect(() => {
+    fetch('http://localhost:5000/contact')
+      .then((res) => res.json())
+      .then((res) => {
+        setMessages(res);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log('Error: ', error);
+      });
+  }, []);
 
   const updateData = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -21,6 +43,7 @@ export default function Contact() {
     if (!data.message) {
       toast.error('yikes! you forgot your message... 🙈❕');
     }
+    const currentMessages = [...messages];
 
     fetch('http://localhost:5000/contact', {
       method: 'POST',
@@ -30,10 +53,11 @@ export default function Contact() {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        console.log('successsss');
-        toast.success(
-          '🎉 thank you for your message, we will get back to you as soon as possible 🎉'
-        );
+        currentMessages.push(data);
+        setMessages(currentMessages);
+        console.log('here', data);
+        console.log('all', currentMessages);
+        toast.success('🎉 thank you for your review 🎉');
       })
       .catch((err) => {
         toast.error('upss! something went wrong! 🔎');
@@ -50,6 +74,39 @@ export default function Contact() {
         <input name="author" defaultValue="" onChange={updateData} />
         <input type="submit" />
       </form>
+      {loading ? (
+        <HashLoader
+          css={override}
+          color={'black'}
+          size={50}
+          loading={loading}
+        />
+      ) : (
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'center',
+              margin: '20px',
+            }}
+          >
+            {messages.map((text, key) => (
+              <div
+                key={key}
+                style={{
+                  border: '2px solid grey',
+                  margin: '5px',
+                  borderRadius: '20px',
+                }}
+              >
+                <p>{text.message}</p>
+                <p>from {text.author}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -42,8 +42,13 @@ export default function AllShows() {
   const [loading, setLoading] = useState(true);
 
   const handleFilterShows = (event) => {
-    // console.log('selectedShows', selectedShows);
-    setShows(shows.filter((show) => show.tag === event.target.value));
+    const currentShows = [...shows];
+    // console.log('currentShows', currentShows);
+    let updatedShows = currentShows.filter(
+      (show) => show.tag === event.target.value
+    );
+    // console.log('updatedShows', updatedShows);
+    setShows(updatedShows);
   };
   const handleSelectAllShows = () => {
     setShows(shows);

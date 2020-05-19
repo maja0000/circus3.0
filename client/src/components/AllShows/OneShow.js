@@ -3,11 +3,11 @@ import './OneSHow.css';
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
-import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function OneShow({ showModal, show, ModalAnimalOpen }) {
+  const [like, setLike] = React.useState(0);
   const addLike = (id) => {
     fetch(`http://localhost:5000/shows/${id}`, {
       method: 'PUT',
@@ -18,6 +18,7 @@ export default function OneShow({ showModal, show, ModalAnimalOpen }) {
     })
       .then((res) => res.json())
       .then((res) => {
+        setLike(like + 1);
         toast.success('🦁cool, thanks for your vote!');
       })
       .catch((err) => {

@@ -18,7 +18,7 @@ function App() {
           shows
         </Link>
         <Link className="menu-item" to="/contact">
-          contact
+          reviews
         </Link>
         <Link className="menu-item" to="/book">
           book
